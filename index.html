@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Foundation 4</title>
+
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="css/foundation.css" />
+  
+
+  <script src="js/vendor/custom.modernizr.js"></script>
+
+</head>
+<body>
+	<div class="row"><div class="large-12 columns">&nbsp;</div></div>
+	<div class="row">
+		<div class="large-4 columns mommy">
+			<div style="position:relative;">
+				<img class="draw" src="http://lorempixel.com/333/500" alt="" />
+			</div>
+		</div>
+		<div class="large-4 columns">
+			Link to use:
+			<input type="text" class="link" />
+			<a href="" class="button update">update</a>
+			<br />
+			Finished Map:
+			<textarea name="themap" id="themap" class="maphtml" style="height:10em;"></textarea>
+			<br />
+			<a href="" class="button addnew">Add New</a>
+		</div>
+		<div class="large-4 columns">
+			<img class="target" src="http://lorempixel.com/333/500" alt="" usemap="#map1" />
+			<map name="map1" id="map1"><area href="" shape="poly" coords="" alt="" title=""></map>
+		</div>
+	</div>
+
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+  
+  <script src="js/foundation.min.js"></script>
+ 
+  <script>
+    $(document).foundation();
+  </script>
+
+<script>
+	$('.update').click(function(event){
+		event.preventDefault();
+		themap.find('area').attr('href', $('.link').val() );
+		$('.maphtml').val( $('<div>').append(themap.clone()).html() );
+	});
+	
+	$('.addnew').click(function(event){
+		event.preventDefault();
+		//create new area adder
+	});
+	thecoordinates = [];
+	themap = $("#map1");
+	
+	$('img').click(function(event) {
+		thecoordinates.push(event.offsetX);
+		thecoordinates.push(event.offsetY);
+		
+		var a = $('<span>X</span>')
+			.css({
+				'color':'red',
+				'position':'absolute',
+				'top':event.offsetY - 10,
+				'left':event.offsetX - 6
+			})
+			.appendTo('.mommy div');
+				
+		themap.find('area').attr('coords', thecoordinates.join(',') );
+		
+		$('.maphtml').val( $('<div>').append(themap.clone()).html() );
+	});
+</script>
+</body>
+</html>
